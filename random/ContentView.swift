@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var result : Int = 5
+    @State private var plus : Int = 0
     @State private var ans = ["yes","no"]
     let circle:[CGSize]=[CGSize(width: 0, height: -55),CGSize(width: 35, height: 55),CGSize(width: -55, height: -12),CGSize(width: -35, height: 55),CGSize(width: 55, height: -12)]
     @State private var showAlert = false
@@ -43,6 +44,7 @@ struct ContentView: View {
                     Button(action:{
                         result=Int.random(in: 1...5)
                         self.showAlert = true
+                        plus=1
                     }){
                         Text("是")
                             .font(.system(size: 28, design: .monospaced))
@@ -56,6 +58,7 @@ struct ContentView: View {
                     Button(action:{
                         result=Int.random(in: 1...5)
                         self.showAlert = true
+                        plus=0
                     }){
                         Text("否")
                             .font(.system(size: 28, design: .monospaced))
@@ -66,7 +69,7 @@ struct ContentView: View {
                             .cornerRadius(10.0)
                     }
                 }.padding().alert(isPresented: $showAlert) { () -> Alert in
-                    return Alert(title: Text("解答："), message:Text(ans[result%2]),dismissButton: .destructive(Text("OK"), action: {
+                    return Alert(title: Text("解答："), message:Text(ans[(result+plus)%2]),dismissButton: .destructive(Text("OK"), action: {
                         print("OK")
                     }))
                 }
